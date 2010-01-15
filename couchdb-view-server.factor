@@ -30,3 +30,23 @@ quots [ { } ] initialize
 : (map-doc) ( doc -- results ) quots get-global swap [ swap call-map-quot ] curry map ;
 
 : map-doc ( doc -- ) (map-doc) respond ;
+
+: true-respond ( response -- ) t swap 2array respond ;
+
+: (reduce-results) ( quot-strings keys-and-values -- results ) ; ! todo
+
+: (rereduce) ( quot-strings values -- results ) ; ! todo
+
+: (filter-docs) ( docs req user-context -- response ) ; ! todo
+
+: reduce-results ( quot-strings keys-and-values -- ) (reduce-results) true-respond ;
+
+: rereduce ( quot-strings values -- ) (rereduce) true-respond ;
+
+: filter-docs ( docs req user-context -- ) (filter-docs) true-respond ;
+
+: validate ( quot-string new-doc old-doc user-context -- ) respond ; ! todo
+
+: show ( quot-string doc req -- ) ; ! todo
+
+: update ( quot-string doc req -- ) ; ! todo
