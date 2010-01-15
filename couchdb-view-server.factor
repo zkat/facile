@@ -50,3 +50,22 @@ quots [ { } ] initialize
 : show ( quot-string doc req -- ) ; ! todo
 
 : update ( quot-string doc req -- ) ; ! todo
+
+!
+! View server
+!
+SYMBOL: dispatch-table
+dispatch-table [
+    {
+        { "reset" [ reset ] }
+        { "add_fun" [ add-quot ] }
+        { "map_doc" [ map-doc ] }
+        { "reduce" [ reduce-results ] }
+        { "rereduce" [ rereduce ] }
+        { "filter" [ filter-docs ] }
+        { "validate" [ validate ] }
+        { "show" [ show ] }
+        { "update" [ update ] }
+        ! { "list" [ couch-list ] }
+    }
+] initialize
