@@ -3,7 +3,7 @@
 USING: kernel stack-checker words compiler.units json.writer json.reader io arrays eval
 namespaces sequences assocs ;
 
-IN: couchdb-view-server
+IN: facile
 
 SYMBOL: quots
 SYMBOL: config

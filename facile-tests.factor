@@ -1,7 +1,7 @@
-! Copyright (C) 2010 Your name.
+! Copyright (C) 2010 Kat Marchán
 ! See http://factorcode.org/license.txt for BSD license.
-USING: tools.test couchdb-view-server namespaces kernel io strings ;
-IN: couchdb-view-server.tests
+USING: tools.test facile namespaces kernel io strings ;
+IN: facile.tests
 
 [ t ]
 [
