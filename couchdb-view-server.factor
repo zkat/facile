@@ -1,7 +1,7 @@
 ! Copyright (C) 2010 Kat Marchán
 ! See http://factorcode.org/license.txt for BSD license.
 USING: kernel stack-checker words compiler.units json.writer json.reader io arrays eval
-namespaces sequences ;
+namespaces sequences assocs ;
 
 IN: couchdb-view-server
 
@@ -33,7 +33,12 @@ quots [ { } ] initialize
 
 : true-respond ( response -- ) t swap 2array respond ;
 
-: (reduce-results) ( quot-strings keys-and-values -- results ) ; ! todo
+: split-keys-and-values ( keys-and-values -- keys values ) unzip swap keys ;
+
+: (reduce-results) ( quot-strings keys-and-values -- results )
+   split-keys-and-values f
+   [ eval( -- quot ) call( doc keys values rereduce? -- reduction ) ]
+   3curry map ;
 
 : (rereduce) ( quot-strings values -- results ) ; ! todo
 
