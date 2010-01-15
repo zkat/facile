@@ -10,15 +10,16 @@ SYMBOL: config
 SYMBOL: map-results
 
 quots [ { } ] initialize
-map-results [ { } ] initialize
 
-: respond ( response -- ) >json print ;
+: respond ( response -- ) >json print flush ;
 
 : emit ( array -- ) map-results swap [ prefix ] curry change ;
 
-: log ( string -- ) "Factor View Server: " swap append "log" swap 2array >json print flush ;
+: (log) ( string -- response ) "Factor View Server: " prepend "log" swap 2array ;
 
-: add-quot ( string -- ) eval( -- quot ) quots [ swap prefix ] change t respond ;
+: log ( string -- ) (log) respond ;
+
+: add-quot ( string -- ) eval( -- quot ) quots [ swap prefix ] change-global t respond;
 
 : reset ( -- ) { } quots set t respond ;
 
@@ -26,4 +27,6 @@ map-results [ { } ] initialize
     { } map-results
     [ call( doc -- ) map-results get ] with-variable ;
 
-: map-doc ( doc -- ) quots get swap [ swap call-map-quot ] curry map respond ;
+: (map-doc) ( doc -- results ) quots get-global swap [ swap call-map-quot ] curry map ;
+
+: map-doc ( doc -- ) (map-doc) respond ;
