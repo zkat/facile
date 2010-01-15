@@ -69,3 +69,7 @@ dispatch-table [
         ! { "list" [ couch-list ] }
     }
 ] initialize
+
+: run-server ( -- ) ;
+
+MAIN: run-server
