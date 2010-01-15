@@ -33,7 +33,7 @@ quots [ { } ] initialize
 
 : true-respond ( response -- ) t swap 2array respond ;
 
-: split-keys-and-values ( keys-and-values -- keys values ) unzip swap keys ;
+: split-keys-and-values ( keys-and-values -- keys values ) unzip swap keys swap ;
 
 : (reduce-results) ( quot-strings keys-and-values -- results )
    split-keys-and-values f
