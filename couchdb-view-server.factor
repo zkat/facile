@@ -19,7 +19,7 @@ quots [ { } ] initialize
 
 : log ( string -- ) (log) respond ;
 
-: add-quot ( string -- ) eval( -- quot ) quots [ swap prefix ] change-global t respond;
+: add-quot ( string -- ) eval( -- quot ) quots [ swap prefix ] change-global t respond ;
 
 : reset ( -- ) { } quots set t respond ;
 
