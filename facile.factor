@@ -40,9 +40,9 @@ quots [ { } ] initialize
     [ call( doc keys values rereduce? -- reduction ) ]
     3curry with map ;
 
-: (rereduce) ( quot-strings values -- results ) ; ! todo
+: (rereduce) ( quot-strings values -- results ) drop ; ! todo
 
-: (filter-docs) ( docs req user-context -- response ) ; ! todo
+: (filter-docs) ( docs req user-context -- response ) 2drop ; ! todo
 
 : reduce-results ( quot-strings keys-and-values -- ) (reduce-results) true-respond ;
 
@@ -50,11 +50,11 @@ quots [ { } ] initialize
 
 : filter-docs ( docs req user-context -- ) (filter-docs) true-respond ;
 
-: validate ( quot-string new-doc old-doc user-context -- ) respond ; ! todo
+: validate ( quot-string new-doc old-doc user-context -- ) 2drop 2drop ; ! todo
 
-: show ( quot-string doc req -- ) ; ! todo
+: show ( quot-string doc req -- ) 3drop ; ! todo
 
-: update ( quot-string doc req -- ) ; ! todo
+: update ( quot-string doc req -- ) 3drop ; ! todo
 
 !
 ! View server
