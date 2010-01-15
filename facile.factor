@@ -37,7 +37,7 @@ quots [ { } ] initialize
 
 : (reduce-results) ( quot-strings keys-and-values -- results )
     swap [ eval( -- quot ) ] map swap split-keys-and-values f
-    [ call( doc keys values rereduce? -- reduction ) ]
+    [ call( keys values rereduce? -- reduction ) ]
     3curry with map ;
 
 : (rereduce) ( quot-strings values -- results ) drop ; ! todo
