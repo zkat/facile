@@ -13,17 +13,17 @@ quots [ { } ] initialize
 
 : respond ( response -- ) >json print flush ;
 
-: emit ( array -- ) map-results swap [ prefix ] curry change ;
+: emit ( x y -- ) 2array map-results swap [ prefix ] curry change ;
 
 : (log) ( string -- response ) "Factor View Server: " prepend "log" swap 2array ;
 
 : log ( string -- ) (log) respond ;
 
-: (map-doc) ( doc -- results ) quots get-global swap [ swap call-map-quot ] curry map ;
-
 : call-map-quot ( doc quot -- result )
     { } map-results
     [ call( doc -- ) map-results get ] with-variable ;
+
+: (map-doc) ( doc -- results ) quots get-global swap [ swap call-map-quot ] curry map ;
 
 : true-respond ( response -- ) t swap 2array respond ;
 
@@ -41,7 +41,8 @@ quots [ { } ] initialize
 
 : (filter-docs) ( docs req user-context -- response ) 2drop ; ! todo
 
-: add-quot ( string -- ) eval( -- quot ) quots [ swap prefix ] change-global t respond ;
+: add-quot ( args -- )
+    first eval( -- quot ) quots [ swap prefix ] change-global t respond ;
 
 : reset ( args -- ) quots set t respond ;
 
@@ -82,14 +83,11 @@ dispatch-table [
 
 : next-line ( -- args cmd-name )
     readln dup empty?
-    [ json> [ rest ] [ first ] bi swap ]
     [ drop next-line ]
+    [ json> [ rest ] [ first ] bi ]
     if ;
 
 : run-server ( -- )
-    [
-        next-line dispatch-command call t
-    ]
-    loop ;
+    next-line dispatch-command call( args -- ) run-server ;
 
 MAIN: run-server
