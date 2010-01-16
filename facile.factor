@@ -36,7 +36,10 @@ quots [ { } ] initialize
 : call-map-quot ( doc quot -- result )
     { } map-results [ call( doc -- ) map-results get ] with-variable ;
 
-: (map-doc) ( doc -- results ) quots get-global swap [ swap call-map-quot ] curry map ;
+: (map-doc) ( doc -- results ) quots get-global swap [ swap call-map-quot ] curry map
+    dup { { } } =
+    [ drop { { { } } } ]
+    [ ] if ;
 
 : (reduce-results) ( quot-strings keys-and-values -- reductions )
     split-kv rot f swap
