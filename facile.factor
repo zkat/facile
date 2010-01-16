@@ -23,18 +23,19 @@ quots [ { } ] initialize
 !
 ! User-side commands
 !
-: emit ( x y -- ) 2array map-results swap [ prefix ] curry change ;
+: emit ( x y -- ) 2array map-results swap [ suffix ] curry change ;
 
 : couch-log ( string -- ) "Factor View Server: " prepend "log" swap 2array respond ;
 
 !
 ! CouchDB command implementations
 !
-: (add-quot) ( string -- ) eval( -- quot ) quots [ swap prefix ] change-global ;
+: (add-quot) ( string -- ) eval( -- quot ) quots [ swap suffix ] change-global ;
 
 : call-map-quot ( doc quot -- result )
     { } map-results
-    [ call( doc -- ) map-results get ] with-variable ;
+    [ call( doc -- ) map-results get ] with-variable
+    1array ;
 
 : (map-doc) ( doc -- results ) quots get-global swap [ swap call-map-quot ] curry map ;
 
