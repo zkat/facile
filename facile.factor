@@ -34,9 +34,7 @@ quots [ { } ] initialize
 : (add-quot) ( string -- ) eval( -- quot ) quots [ swap suffix ] change-global ;
 
 : call-map-quot ( doc quot -- result )
-    { } map-results
-    [ call( doc -- ) map-results get ] with-variable
-    1array ;
+    { } map-results [ call( doc -- ) map-results get ] with-variable ;
 
 : (map-doc) ( doc -- results ) quots get-global swap [ swap call-map-quot ] curry map ;
 
