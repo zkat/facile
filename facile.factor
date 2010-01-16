@@ -11,23 +11,32 @@ SYMBOL: map-results
 
 quots [ { } ] initialize
 
+!
+! utils
+!
+: split-kv ( keys-and-values -- values keys ) unzip swap keys ;
+
 : respond ( response -- ) >json print flush ;
 
+: true-respond ( response -- ) t swap 2array respond ;
+
+!
+! User-side commands
+!
 : emit ( x y -- ) 2array map-results swap [ prefix ] curry change ;
 
-: (log) ( string -- response ) "Factor View Server: " prepend "log" swap 2array ;
+: couch-log ( string -- ) "Factor View Server: " prepend "log" swap 2array respond ;
 
-: couch-log ( string -- ) (log) respond ;
+!
+! CouchDB command implementations
+!
+: (add-quot) ( string -- ) eval( -- quot ) quots [ swap prefix ] change-global ;
 
 : call-map-quot ( doc quot -- result )
     { } map-results
     [ call( doc -- ) map-results get ] with-variable ;
 
 : (map-doc) ( doc -- results ) quots get-global swap [ swap call-map-quot ] curry map ;
-
-: true-respond ( response -- ) t swap 2array respond ;
-
-: split-kv ( keys-and-values -- values keys ) unzip swap keys ;
 
 : (reduce-results) ( quot-strings keys-and-values -- reductions )
     split-kv rot f swap
@@ -41,8 +50,11 @@ quots [ { } ] initialize
 
 : (filter-docs) ( docs req user-context -- response ) 2drop ; ! todo
 
+!
+! Command processors
+!
 : add-quot ( args -- )
-    first eval( -- quot ) quots [ swap prefix ] change-global t respond ;
+    first (add-quot) t respond ;
 
 : reset ( args -- ) quots set t respond ;
 
