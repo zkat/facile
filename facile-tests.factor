@@ -31,3 +31,20 @@ IN: facile.tests
     (reduce-results)
     0 swap nth 2 =
 ] unit-test
+
+[ t ]
+[
+    { "USING: kernel math sequences ; [ 2drop 0 [ + ] reduce ]" }
+    { 1 2 3 }
+    (rereduce)
+    0 swap nth 6 =
+] unit-test
+
+[ t ]
+[
+    { "[ 2drop 0 [ + ] reduce ]" }
+    { 1 2 3 }
+    (rereduce)
+    0 swap nth 6 =
+] unit-test
+
