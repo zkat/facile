@@ -19,17 +19,11 @@ quots [ { } ] initialize
 
 : log ( string -- ) (log) respond ;
 
-: add-quot ( string -- ) eval( -- quot ) quots [ swap prefix ] change-global t respond ;
-
-: reset ( -- ) { } quots set t respond ;
+: (map-doc) ( doc -- results ) quots get-global swap [ swap call-map-quot ] curry map ;
 
 : call-map-quot ( doc quot -- result )
     { } map-results
     [ call( doc -- ) map-results get ] with-variable ;
-
-: (map-doc) ( doc -- results ) quots get-global swap [ swap call-map-quot ] curry map ;
-
-: map-doc ( doc -- ) (map-doc) respond ;
 
 : true-respond ( response -- ) t swap 2array respond ;
 
@@ -47,17 +41,23 @@ quots [ { } ] initialize
 
 : (filter-docs) ( docs req user-context -- response ) 2drop ; ! todo
 
-: reduce-results ( quot-strings keys-and-values -- ) (reduce-results) true-respond ;
+: add-quot ( string -- ) eval( -- quot ) quots [ swap prefix ] change-global t respond ;
 
-: rereduce ( quot-strings values -- ) (rereduce) true-respond ;
+: reset ( args -- ) quots set t respond ;
 
-: filter-docs ( docs req user-context -- ) (filter-docs) true-respond ;
+: map-doc ( args -- ) first (map-doc) respond ;
 
-: validate ( quot-string new-doc old-doc user-context -- ) 2drop 2drop ; ! todo
+: reduce-results ( args -- ) first2 (reduce-results) true-respond ;
 
-: show ( quot-string doc req -- ) 3drop ; ! todo
+: rereduce ( args -- ) first2 (rereduce) true-respond ;
 
-: update ( quot-string doc req -- ) 3drop ; ! todo
+: filter-docs ( args -- ) first3 (filter-docs) true-respond ;
+
+: validate ( args -- ) first4 2drop 2drop ; ! todo
+
+: show ( args -- ) first3 3drop ; ! todo
+
+: update ( args -- ) first3 3drop ; ! todo
 
 !
 ! View server
