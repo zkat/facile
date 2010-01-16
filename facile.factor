@@ -33,12 +33,12 @@ quots [ { } ] initialize
 
 : true-respond ( response -- ) t swap 2array respond ;
 
-: split-keys-and-values ( keys-and-values -- keys values ) unzip swap keys swap ;
+: split-kv ( keys-and-values -- values keys ) unzip swap keys ;
 
-: (reduce-results) ( quot-strings keys-and-values -- results )
-    swap [ eval( -- quot ) ] map swap split-keys-and-values f
-    [ call( keys values rereduce? -- reduction ) ]
-    3curry with map ;
+: (reduce-results) ( quot-strings keys-and-values -- reductions )
+    split-kv rot f swap
+    [ eval( -- quot ) call( values keys rereduce? -- reduction ) ]
+    with with with map ;
 
 : (rereduce) ( quot-strings values -- results ) drop ; ! todo
 
