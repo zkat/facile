@@ -1,7 +1,8 @@
 ! Copyright (C) 2010 Kat Marchán
 ! See http://factorcode.org/license.txt for BSD license.
-USING: kernel stack-checker words compiler.units json.writer json.reader io arrays eval
-namespaces sequences assocs ;
+USING: arrays assocs compiler.units continuations eval io
+json.reader json.writer kernel namespaces sequences
+stack-checker words ;
 
 IN: facile
 
