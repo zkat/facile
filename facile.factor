@@ -56,8 +56,9 @@ quots [ { } ] initialize
 ! Command processors
 !
 : add-quot ( args -- )
-    [ first (add-quot) t respond ]
-    [ H{ { "error" "quote-addition-error" }
+    [ first (add-quot) t respond ] curry
+    [ drop
+      H{ { "error" "quote-addition-error" }
          { "reason" "Something went wrong while adding a quotation." } }
       respond
     ] recover ;
