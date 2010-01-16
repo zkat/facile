@@ -40,7 +40,10 @@ quots [ { } ] initialize
     [ eval( -- quot ) call( values keys rereduce? -- reduction ) ]
     with with with map ;
 
-: (rereduce) ( quot-strings values -- results ) drop ; ! todo
+: (rereduce) ( quot-strings values -- results )
+    { } rot t swap
+    [ eval( -- quot ) call( values keys rereduce? -- reduction ) ]
+    with with with map ;
 
 : (filter-docs) ( docs req user-context -- response ) 2drop ; ! todo
 
