@@ -65,7 +65,14 @@ quots [ { } ] initialize
 
 : reset ( args -- ) quots set t respond ;
 
-: map-doc ( args -- ) first (map-doc) respond ;
+: map-doc ( args -- )
+    [ first (map-doc) respond ] curry
+    [ drop
+      H{ { "error" "map-call-error" }
+         { "reason" "Something went wrong while applying a map quotation" } }
+      respond
+    ] recover
+    ;
 
 : reduce-results ( args -- ) first2 (reduce-results) true-respond ;
 
