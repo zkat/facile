@@ -17,7 +17,7 @@ quots [ { } ] initialize
 
 : (log) ( string -- response ) "Factor View Server: " prepend "log" swap 2array ;
 
-: log ( string -- ) (log) respond ;
+: couch-log ( string -- ) (log) respond ;
 
 : call-map-quot ( doc quot -- result )
     { } map-results
