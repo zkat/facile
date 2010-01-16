@@ -5,7 +5,21 @@ IN: facile.tests
 
 [ t ]
 [
-    { } map-results set { 1 2 } emit map-results get
+    {
+        { { 1 2 } 3 }
+        { { 4 5 } 6 }
+        { { 7 8 } 9 }
+    }
+    split-kv
+    { 1 4 7 } =
+    swap
+    { 3 6 9 } =
+    and
+]
+
+[ t ]
+[
+    { } map-results set 1 2 emit map-results get
     { { 1 2 } } =
 ] unit-test
 
@@ -47,4 +61,3 @@ IN: facile.tests
     (rereduce)
     0 swap nth 6 =
 ] unit-test
-
