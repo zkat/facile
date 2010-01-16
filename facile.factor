@@ -78,6 +78,18 @@ dispatch-table [
     }
 ] initialize
 
-: run-server ( -- ) ;
+: dispatch-command ( name -- quot ) dispatch-table get-global at ;
+
+: next-line ( -- args cmd-name )
+    readln dup empty?
+    [ json> [ rest ] [ first ] bi swap ]
+    [ drop next-line ]
+    if ;
+
+: run-server ( -- )
+    [
+        next-line dispatch-command call t
+    ]
+    loop ;
 
 MAIN: run-server
